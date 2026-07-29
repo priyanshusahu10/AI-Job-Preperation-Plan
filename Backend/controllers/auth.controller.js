@@ -2,6 +2,7 @@ const userModel = require('../models/user.model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const blackListToken = require('../models/blacklist.model')
+const nodemailer = require("nodemailer");
 const Middleware = require('../middleware/auth.middleware')
 
 async function userRegister(req,res){
@@ -43,11 +44,11 @@ async function userRegister(req,res){
             message:"User registered Successfully",
             user:{
                 id:user._id,
-                usernakme:user.username,
+                username:user.username,
                 email:user.email,
             }
         })
-        console.log(req.body,token)
+        console.log(JSON.req.body)
 }
 
 async function loginController(req,res){
@@ -85,6 +86,7 @@ async function loginController(req,res){
             
         })
         console.log("User Login Successfully")
+        
 }
 
 async function logoutController(req,res){
@@ -117,10 +119,68 @@ async function getUser(req,res){
 }
 
 
+const sendContactMessage = async (req, res) => {
+  try {
+    const { name, email, subject, message } = req.body;
+
+    // Validation
+    if (!name || !email || !subject || !message) {
+      return res.status(400).json({
+        message: "All fields are required",
+      });
+    }
+
+    // Gmail transporter
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    // Send email
+    await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: process.env.EMAIL, // Your email address
+      replyTo: email,        // Clicking Reply replies to the sender
+      subject: `Contact Form: ${subject}`,
+      html: `
+        <h2>New Contact Message</h2>
+
+        <p><strong>Name:</strong> ${name}</p>
+
+        <p><strong>Email:</strong> ${email}</p>
+
+        <p><strong>Subject:</strong> ${subject}</p>
+
+        <p><strong>Message:</strong></p>
+
+        <p>${message}</p>
+      `,
+    });
+
+    res.status(200).json({
+      message: "Message sent successfully!",
+    });
+
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      message: "Something went wrong",
+    });
+  }
+};
+
+
+
+
 module.exports = {
     userRegister,
     loginController,
     logoutController,
-    getUser
+    getUser,
+    sendContactMessage
 
 };

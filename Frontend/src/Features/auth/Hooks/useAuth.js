@@ -14,6 +14,8 @@ export const useAuth = () => {
         try{
         const data = await login({email,password})  
         setUser(data.user)
+        console.log(data.user);
+        
         }catch(err){
 
         }finally{

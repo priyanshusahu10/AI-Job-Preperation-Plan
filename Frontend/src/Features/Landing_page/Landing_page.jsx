@@ -1,6 +1,8 @@
 import { useNavigate, Link} from "react-router";
 import React from "react";
 import "./Landing_page.css"
+import ContactUs from "./Services/api.service"
+import { useState } from "react";
 import {
   Sparkles,
   ArrowRight,
@@ -10,12 +12,34 @@ import {
   ShieldCheck,
   UserRound
 } from "lucide-react";
+import axios from "axios";
 
 
 
 
 const Landing = () => {
   const navigate = useNavigate()
+   
+  const [name, setname] = useState()
+  const [email, setEmail] = useState()
+  const [subject, setSubject] = useState()
+  const [message, setMessage] = useState()
+
+
+const handleSubmit = async () =>{
+  e.preventDefault();
+  const Datasend = {
+    name,email,subject,message
+  }
+
+  try{
+    const response = await axios.post('http://localhost:8000/api/auth/contact',Datasend)
+    alert(response.data)
+  }catch(err){
+    console.log(err)
+  }
+}
+
 
   return (
     <div className="landing">
@@ -125,13 +149,76 @@ const Landing = () => {
         <button className="start-now">Start Now -- it's Free  </button>
       </section>
 
-      {/* <section className="contact-us">
-        <h3>Contact</h3>
-        <div className="contact"></div>
-      </section> */}
+      <section className="contact-us">
+        <h3>Contact Us</h3>
+         <div className="contact-container">
+          
+      <div className="contact-card">
+        <div className="contact-info">
+          <h2>Contact Us</h2>
+          <p>
+            We'd love to hear from you. Fill out the form and our team will get
+            back to you as soon as possible.
+          </p>
+
+          <div className="info-item">
+            <h4>Email</h4>
+            <p>support@example.com</p>
+          </div>
+
+          <div className="info-item">
+            <h4>Phone</h4>
+            <p>+91 98765 43210</p>
+          </div>
+
+          <div className="info-item">
+            <h4>Address</h4>
+            <p>Kanpur, Uttar Pradesh, India</p>
+          </div>
+        </div>
+
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <h2>Send Message</h2>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            onChange={(e)=>setName(e.target.value)}
+            required
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+           onChange={(e)=>setEmail(e.target.value)}
+            required
+          />
+
+          <input
+            type="text"
+            name="subject"
+            placeholder="Subject"
+           onChange={(e)=>setSubject(e.target.value)}
+            required
+          />
+
+          <textarea
+            name="message"
+            rows="6"
+            placeholder="Write your message..."
+           onChange={(e)=>setMessage(e.target.value)}
+            required
+          ></textarea>
+
+          <button type="submit">Send Message</button>
+        </form>
+      </div>
+    </div>
+      </section>
     </div>
   )
 
 }
-
 export default Landing;

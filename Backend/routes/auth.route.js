@@ -9,4 +9,5 @@ router.post('/login',authController.loginController)
 router.get('/logout',authController.logoutController)
 router.get('/get-user',Middleware.User,authController.getUser)
 
+
 module.exports = router;

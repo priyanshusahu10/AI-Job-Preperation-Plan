@@ -12,9 +12,10 @@ const Home = () => {
   const [resumeFile, setResumeFile] = useState(null)
   const [fileName, setFileName] = useState('No file selected yet')
   const { generateReport, loading } = useInterview()
-      const resumeInputRef = useRef()
-
+  const resumeInputRef = useRef()
   const navigate = useNavigate()
+
+
 
     const handleGenerateReport = async () => {
         const resumeFile = resumeInputRef.current.files[ 0 ]
@@ -86,9 +87,6 @@ const Home = () => {
           </div>
 
 
-
-
-
           {/* Right Resume */}
 
           <div className="field">
@@ -145,9 +143,6 @@ const Home = () => {
         </div>
 
 
-
-
-
         {/* Self Description */}
 
         <div className="field self">
@@ -161,16 +156,12 @@ const Home = () => {
           <textarea
            onChange={(e) => { setSelfDescription(e.target.value) }}
             placeholder="
-Describe your skills, experience, projects and career goals..."
+            Describe your skills, experience, projects and career goals..."
 
           />
 
 
         </div>
-
-
-
-
 
         <button className="start-btn" onClick={handleGenerateReport}>
 
@@ -178,10 +169,7 @@ Describe your skills, experience, projects and career goals..."
 
         </button>
 
-
-
       </div>
-
 
     </div>
 

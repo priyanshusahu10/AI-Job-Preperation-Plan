@@ -1,36 +1,36 @@
-import React , {useState} from 'react'
-import { useNavigate,Link } from "react-router"
+import React, { useState } from 'react'
+import { useNavigate, Link } from "react-router"
 import "./Login.css"
-import {useAuth} from "../Hooks/useAuth"
+import { useAuth } from "../Hooks/useAuth"
 import Loading from "./Loading/Loading.jsx"
 
 const Login = () => {
 
-   const {loading,handleLogin} = useAuth()
+  const { loading, handleLogin } = useAuth()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [error,setError] = useState("")
+  const [error, setError] = useState("")
   const navigate = useNavigate();
 
-    const handleSubmit = async (e)=>{
-      e.preventDefault()
-      try{
-        setError(false)
-     await handleLogin({email,password})
-     navigate('/generate-report')
-      }catch(err){
-      
-        }
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      setError(false)
+      await handleLogin({ email, password })
+      navigate('/generate-report')
+    } catch (err) {
 
-    
-    if(loading){
-      return (
-        <>
-      <Loading />
-    </>
-      )
     }
+  }
+
+
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    )
+  }
 
   return (
     <div className="login-page">
@@ -78,7 +78,7 @@ const Login = () => {
 
 
           <input
-          onChange={(e)=>{setEmail(e.target.value)}}
+            onChange={(e) => { setEmail(e.target.value) }}
             type="email"
             placeholder="example@example.com"
           />
@@ -95,7 +95,7 @@ const Login = () => {
 
 
             <input
-                onChange={(e)=>{setPassword(e.target.value)}}
+              onChange={(e) => { setPassword(e.target.value) }}
               type="password"
 
               placeholder="Enter your password"
@@ -111,8 +111,8 @@ const Login = () => {
             Sign In →
           </button>
 
-      
-         
+
+
         </form>
 
 
@@ -121,22 +121,22 @@ const Login = () => {
 
       <div className="signup-link">
 
-        Don't have an account?  
+        Don't have an account?
 
         <span>
           <Link to={'/register'}>
-          Create account
+            Create account
           </Link>
         </span>
 
       </div>
 
-    
+
 
     </div>
 
   );
 };
-  
+
 
 export default Login

@@ -16,7 +16,7 @@ interviewRouter.get("/report/:interviewId", authMiddleware.User, interviewContro
 interviewRouter.get("/", authMiddleware.User, interviewController.getAllInterviewReportsController)
 
 
-// interviewRouter.post("/resume/pdf/:interviewReportId", authMiddleware.authUser, interviewController.generateResumePdfController)
+interviewRouter.post("/resume/pdf/:interviewReportId", authMiddleware.User, interviewController.generateResumePdfController)
 
 
 

@@ -32,7 +32,7 @@ export async function login({ email, password }) {
         })
 
         return response.data
-
+        console.log("data")
     } catch (err) {
         console.log(err)
     }
@@ -57,7 +57,7 @@ export async function getUser() {
 
     try {
 
-        const response = await axios.get("/api/auth/get-user",{
+        const response = await axios.get("http://localhost:8000/api/auth/get-user",{
             withCredentials:true
         })
 
