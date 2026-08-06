@@ -25,7 +25,7 @@ export async function login({ email, password }) {
 
     try {
 
-        const response = await axios.post("http://localhost:8000/api/auth/login", {
+        const response = await axios.post("https://ai-job-preperation-plan.onrender.com/api/auth/login", {
             email, password
         },{
             withCredentials: true
