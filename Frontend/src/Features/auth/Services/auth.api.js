@@ -5,7 +5,7 @@ import axios from "axios"
 export async function register({ username, email, password }) {
 
     try {
-        const response = await axios.post('http://localhost:8000/api/auth/register', {
+        const response = await axios.post('https://ai-job-preperation-plan.onrender.com/api/auth/register', {
             username, email, password
         },{
             withCredentials: true
@@ -42,7 +42,7 @@ export async function login({ email, password }) {
 export async function logOut() {
     try {
 
-        const response = await axios.get("http://localhost:8000/api/auth/logout",{
+        const response = await axios.get("https://ai-job-preperation-plan.onrender.com/api/auth/logout",{
             withCredentials:true
         })
 
@@ -57,7 +57,7 @@ export async function getUser() {
 
     try {
 
-        const response = await axios.get("http://localhost:8000/api/auth/get-user",{
+        const response = await axios.get("https://ai-job-preperation-plan.onrender.com/api/auth/get-user",{
             withCredentials:true
         })
 
