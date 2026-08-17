@@ -108,11 +108,10 @@ async function logoutController(req,res){
         await blackListToken.create({token})
     }
      
-  res.cookie("token", token, {
-  httpOnly: true,
-  secure: true,
-  sameSite: "none",
-  maxAge: 7 * 24 * 60 * 60 * 1000,
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none"
 });
 
     res.status(200).json({
@@ -121,18 +120,38 @@ async function logoutController(req,res){
 }
 
 
-async function getUser(req,res){
-    const user = await userModel.findById(req.user.id)
-    res.status(200).json({
-        message:"User detail fetched successfully",
-        user:{
-            id:user._id,
-            username:user.username,
-            email:user.email
+async function getUser(req, res) {
+    try {
+        if (!req.user) {
+            return res.status(401).json({
+                message: "Unauthorized"
+            });
         }
-    })
 
-    
+        const user = await userModel.findById(req.user.id);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "User detail fetched successfully",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            message: "Internal server error"
+        });
+    }
 }
 
 
